@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  appVersion: require('../../package.json').version,
+  API_URL: 'https://dhonstudio.com/ci/api',
 };
