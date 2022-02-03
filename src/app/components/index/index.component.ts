@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { GlobalService } from 'src/app/services/angular_services/global.service';
 import { UserService } from 'src/app/services/angular_services/user.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-index',
@@ -36,10 +37,10 @@ export class IndexComponent implements OnInit {
 
   auth() {
     console.log(this.formGroup.value)
-    this.userService.checkPassword('project', 'user_ci', {username: 'admin', password: 'admin'}, this.formGroup.value.email, this.formGroup.value.password, 'password_hash').then(result => {
+    this.userService.checkPassword('project', 'user_ci', {username: 'admin', password: 'admin'}, this.formGroup.value.email, 'email', this.formGroup.value.password, 'password_hash').then(result => {
       if (result) {
-        this.userService.checkUser('project', 'user_ci', {username: 'admin', password: 'admin'}, this.formGroup.value.email).then(user => {
-          this.cookieService.set('DSaAs13S', `${user[0].id}`, 0.08, '/', '', true, 'Strict')
+        this.userService.checkUser('project', 'user_ci', {username: 'admin', password: 'admin'}, this.formGroup.value.email, 'email').then(user => {
+          this.cookieService.set('DSaAs13S', CryptoJS.AES.encrypt(`${user[0].id}`, 'DSaAs13S').toString(), 0.08, '/', '', true, 'Strict')
           window.location.href = 'http://localhost/ci_dhonstudio/angular/kesku'
         })
       }
