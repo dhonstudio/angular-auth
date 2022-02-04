@@ -12,6 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
+import { secret } from 'src/environments/secret';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,12 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
 
+    //font-awesome
+    FontAwesomeModule,
+
+    //social-login
+    SocialLoginModule,
+
     //ng-bootstrap
     NgbModule,
 
@@ -35,7 +44,25 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
   ],
   providers: [
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}},
+    {provide: 'SocialAuthServiceConfig', useValue: {
+      autoLogin: true,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider(
+            /*
+            | -------------------------------------------------------------------
+            |  Create file secret.ts and secret.prod.ts in environments folder fill this code:
+            |  export const secret = {
+            |    googleClientId : 'your-client-id.apps.googleusercontent.com'
+            |  };
+            */
+            secret.googleClientId
+          )
+        }
+      ]
+    } as SocialAuthServiceConfig},
   ],
   bootstrap: [AppComponent]
 })

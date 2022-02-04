@@ -4,7 +4,7 @@
     <div class="col-6">
       <form class="example-form" [formGroup]="formGroup">
         <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>Email</mat-label>
+          <mat-label>Emails</mat-label>
           <input matInput placeholder="email@domain.com" formControlName="email">
         </mat-form-field>
       
@@ -20,6 +20,14 @@
           <button type="button" mat-raised-button color="primary" (click)="auth()">Login</button>
         </div>
       </form>
+
+      <div class="text-center mt-3 example-form">
+        -OR-
+      </div>
+
+      <div class="text-center mt-3 example-form">
+        <button type="button" mat-raised-button class="btn btn-danger" (click)="loginWithGoogle()"><fa-icon [icon]="faGoogle"></fa-icon> Login with Google</button>
+      </div>
     </div>
     <div class="col"></div>
   </div>
